@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.pamsoft.ebs.error.BadRequestException;
 import pl.pamsoft.ebs.model.Person;
 import pl.pamsoft.ebs.repositories.PersonRepository;
 
@@ -22,8 +23,19 @@ public class PersonController {
 		return repository.findAll();
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public void save(Person person) {
+	@RequestMapping(method = RequestMethod.POST)
+	public void save(Person person) throws BadRequestException {
+		if (null != person.getId()) {
+			throw new BadRequestException("Id must be null");
+		}
+		repository.save(person);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT)
+	public void update(Person person) throws BadRequestException {
+		if (null == person.getId()) {
+			throw new BadRequestException("Id must not be null");
+		}
 		repository.save(person);
 	}
 }
