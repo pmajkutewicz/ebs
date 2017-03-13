@@ -1,9 +1,12 @@
 package pl.pamsoft.ebs.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 import pl.pamsoft.ebs.model.Estimation;
+import pl.pamsoft.ebs.model.Person;
 
-public interface EstimationRepository extends JpaRepository<Estimation, Long> {
+public interface EstimationRepository extends BaseRepository<Estimation>, EstimationRepositoryCustom {
+
+	List<Estimation> findAllByPerson(Person person);
 
 }

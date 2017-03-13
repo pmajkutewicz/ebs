@@ -9,11 +9,10 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 
-
 @Entity
 @Table(name = "person")
 @Getter
-public class Person {
+public class Person extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,5 +23,7 @@ public class Person {
 
 	@NotNull
 	private String lastName;
+
+	private transient Boolean generateRandomEntries;
 
 }

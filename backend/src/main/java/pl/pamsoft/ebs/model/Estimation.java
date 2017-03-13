@@ -1,5 +1,7 @@
 package pl.pamsoft.ebs.model;
 
+import java.util.Date;
+import java.util.Optional;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,11 +10,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "estimation")
-public class Estimation {
+@Getter
+@NoArgsConstructor
+public class Estimation extends AbstractEntity {
 
+	@JsonView(Views.PersonEstimations.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -20,12 +30,31 @@ public class Estimation {
 	@ManyToOne
 	private Person person;
 
+	@JsonView(Views.PersonEstimations.class)
 	@ManyToOne
 	private Task task;
 
+	@JsonView(Views.PersonEstimations.class)
 	@NotNull
 	private Integer estimatedTime;
 
-	@NotNull
+	@JsonView(Views.PersonEstimations.class)
 	private Integer actualTime;
+
+	@JsonView(Views.PersonEstimations.class)
+	private Long estimationTimestamp = new Date().getTime();
+
+	public Estimation(Person person, Task task, Integer estimatedTime, Integer actualTime) {
+		this.person = person;
+		this.task = task;
+		this.estimatedTime = estimatedTime;
+		this.actualTime = actualTime;
+	}
+
+	public Float getVelocity() {
+		if (null == actualTime || 0 == actualTime) {
+			return null;
+		}
+		return (float) estimatedTime / actualTime;
+	}
 }
