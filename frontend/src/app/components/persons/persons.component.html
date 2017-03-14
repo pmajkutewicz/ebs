@@ -1,0 +1,41 @@
+<div>
+  <h2>Your team:</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>First name</th>
+      <th>Last name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of person">
+      <td style="vertical-align: middle;">{{row.id}}</td>
+      <td style="vertical-align: middle;">{{row.firstName}}</td>
+      <td style="vertical-align: middle;">{{row.lastName}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deletePerson(row.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+<div>
+  <h3>Add new team member:</h3>
+  <form (ngSubmit)="onSubmitPerson()" #personForm="ngForm">
+    <div class="form-group form-inline">
+      <label for="firstName" class="col-sm-3 control-label">First name</label>
+      <input type="text" class="form-control" id="firstName" [(ngModel)]="model.firstName" name="firstName" required>
+    </div>
+    <div class="form-group form-inline">
+      <label for="lastName" class="col-sm-3 control-label">Last name</label>
+      <input type="text" class="form-control" id="lastName" [(ngModel)]="model.lastName" name="lastName" required>
+    </div>
+    <div class="form-group form-inline">
+      <label for="generateRandomEntries" class="col-sm-3 control-label">Generate random estimations</label>
+      <input type="checkbox" class="form-control" id="generateRandomEntries" [(ngModel)]="model.generateRandomEntries" name="generateRandomEntries">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">Submit</button>
+  </form>
+</div>

@@ -1,3 +1,10 @@
-<h1>
-  {{title}}
-</h1>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ng2-bootstrap/x.x.x/ng2-bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-app="ebs">
+<ebs-header></ebs-header>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+</body>

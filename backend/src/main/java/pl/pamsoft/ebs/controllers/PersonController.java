@@ -3,6 +3,7 @@ package pl.pamsoft.ebs.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class PersonController extends AbstractController<Person> {
 		this.estimationServices = estimationServices;
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void save(@Valid @RequestBody Person person) throws BadRequestException {
 		if (null != person.getId()) {
 			throw new BadRequestException("Id must be null");
