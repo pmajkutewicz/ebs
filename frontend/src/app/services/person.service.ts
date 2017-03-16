@@ -4,11 +4,12 @@ import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Person} from "../model/Person";
 import {Observable} from "rxjs/Rx";
 import "rxjs/Rx";
+import {CONSTANT} from "../app.const";
 
 @Injectable()
 export class PersonService {
 
-  private baseUrl: string = 'http://localhost:8083/person';
+  private baseUrl: string = `${CONSTANT.BASE_URL}/person`;
 
   constructor(private http: Http) {
 

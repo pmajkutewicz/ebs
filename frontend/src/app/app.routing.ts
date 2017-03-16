@@ -1,10 +1,9 @@
-import {Routes, RouterModule} from "@angular/router";
-import {AppComponent} from "./app.component";
+import {RouterModule, Routes} from "@angular/router";
 import {PersonsComponent} from "./components/persons/persons.component";
 import {MainComponent} from "./components/main/main.component";
 
 const EBS_ROUTES: Routes = [
-  {path: 'person', component: PersonsComponent},
+  {path: 'team', component: PersonsComponent},
   {path: '', component: MainComponent}
 ];
 
