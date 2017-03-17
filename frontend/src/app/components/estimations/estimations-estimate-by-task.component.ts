@@ -15,12 +15,20 @@ export class EstimationsEstimateByTaskComponent implements OnInit {
   tasks: Task[] = [];
   estimations: Estimation[] = [];
   updateEnabled:boolean = false;
+  private chartData: Array<any>;
 
   constructor(private taskService: TaskService, private estimationService: EstimationService) {
   }
 
   ngOnInit() {
     this.taskService.getAll().subscribe(p => this.tasks = p);
+
+    setTimeout(() => {
+      this.generateData();
+
+      // change the data periodically
+      setInterval(() => this.generateData(), 3000);
+    }, 1000);
   }
 
   onTaskChange(taskId: number) {
@@ -63,4 +71,13 @@ export class EstimationsEstimateByTaskComponent implements OnInit {
 
   get diagnostic() { return JSON.stringify(this.estimations); }
 
+  generateData() {
+    this.chartData = [];
+    for (let i = 0; i < (8 + Math.floor(Math.random() * 10)); i++) {
+      this.chartData.push([
+        `Index ${i}`,
+        Math.floor(Math.random() * 100)
+      ]);
+    }
+  }
 }

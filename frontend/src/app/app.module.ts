@@ -12,6 +12,7 @@ import {EstimationsEstimateByTaskComponent} from "./components/estimations/estim
 import {EstimationsEstimateByPersonComponent} from "./components/estimations/estimations-estimate-by-person.component";
 import {DropdownModule} from "ng2-bootstrap";
 import {routing} from "./app.routing";
+import { BarchartComponent } from './shared/barchart/barchart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {routing} from "./app.routing";
     MainComponent,
     TasksComponent,
     EstimationsEstimateByTaskComponent,
-    EstimationsEstimateByPersonComponent
+    EstimationsEstimateByPersonComponent,
+    BarchartComponent
   ],
   imports: [
     BrowserModule,
