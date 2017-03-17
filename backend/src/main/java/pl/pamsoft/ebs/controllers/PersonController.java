@@ -27,10 +27,7 @@ public class PersonController extends AbstractController<Person> {
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void save(@Valid @RequestBody Person person) throws BadRequestException {
-		if (null != person.getId()) {
-			throw new BadRequestException("Id must be null");
-		}
-		repository.save(person);
+		super.save(person);
 		if (person.getGenerateRandomEntries()) {
 			estimationServices.generateRandomEstimates(person);
 		}

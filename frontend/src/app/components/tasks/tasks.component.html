@@ -1,0 +1,37 @@
+<div>
+  <h2>Your tasks:</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of tasks">
+      <td style="vertical-align: middle;">{{row.id}}</td>
+      <td style="vertical-align: middle;">{{row.name}}</td>
+      <td style="vertical-align: middle;">{{row.description}}</td>
+      <td>
+        <button type="button" class="btn btn-danger" (click)="deleteTask(row.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+<div>
+  <h3>Add new team member:</h3>
+  <form (ngSubmit)="onSubmitTask()" #taskForm="ngForm">
+    <div class="form-group form-inline">
+      <label for="name" class="col-sm-3 control-label">Name</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" required>
+    </div>
+    <div class="form-group form-inline">
+      <label for="description" class="col-sm-3 control-label">Description</label>
+      <input type="text" class="form-control" id="description" [(ngModel)]="model.description" name="description">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!taskForm.form.valid">Submit</button>
+  </form>
+</div>

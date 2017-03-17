@@ -12,7 +12,6 @@ export class PersonService {
   private baseUrl: string = `${CONSTANT.BASE_URL}/person`;
 
   constructor(private http: Http) {
-
   }
 
   getAll(): Observable<Person[]> {

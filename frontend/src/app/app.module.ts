@@ -4,18 +4,20 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 
 import {AppComponent} from "./app.component";
-import {PersonsComponent} from "./components/persons/persons.component";
-import {routing} from "./app.routing";
-import {HeaderComponent} from "./components/header/header.component";
 import {MainComponent} from "./components/main/main.component";
+import {HeaderComponent} from "./components/header/header.component";
+import {PersonsComponent} from "./components/persons/persons.component";
+import {TasksComponent} from "./components/tasks/tasks.component";
 import {DropdownModule} from "ng2-bootstrap";
+import {routing} from "./app.routing";
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonsComponent,
     HeaderComponent,
-    MainComponent
+    MainComponent,
+    TasksComponent
   ],
   imports: [
     BrowserModule,
@@ -27,4 +29,5 @@ import {DropdownModule} from "ng2-bootstrap";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
