@@ -22,7 +22,8 @@
           <a id="single-button" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
              aria-expanded="false" dropdownToggle>Estimations <span class="caret"></span></a>
           <ul class="dropdown-menu" dropdownMenu aria-labelledby="single-button" role="menu">
-            <li><a [routerLink]="['/']">Estimate task</a></li>
+            <li><a [routerLink]="['/estimations', 'estimate', 'task']">Estimate by task</a></li>
+            <li><a [routerLink]="['/estimations', 'estimate', 'person']">Estimate by person</a></li>
             <li><a [routerLink]="['/']">View team stats</a></li>
           </ul>
         </li>

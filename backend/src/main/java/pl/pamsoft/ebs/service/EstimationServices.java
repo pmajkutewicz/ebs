@@ -1,5 +1,6 @@
 package pl.pamsoft.ebs.service;
 
+import java.util.Collection;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -51,6 +52,10 @@ public class EstimationServices {
 		IntStream.rangeClosed(1, EXAMPLE_ESTIMATIONS_NB)
 			.mapToObj(i -> createEstimation(person, randomTask))
 			.forEach(estimationRepository::save);
+	}
+
+	public Collection<Estimation> getEstimationsByTasks(Long taskId) {
+		return estimationRepository.findAllByTask(taskRepository.getOne(taskId));
 	}
 
 	@Autowired

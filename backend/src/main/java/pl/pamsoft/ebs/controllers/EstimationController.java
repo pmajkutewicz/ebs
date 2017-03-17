@@ -1,8 +1,10 @@
 package pl.pamsoft.ebs.controllers;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,7 @@ import pl.pamsoft.ebs.dto.SimulatedEstimation;
 import pl.pamsoft.ebs.error.BadRequestException;
 import pl.pamsoft.ebs.model.Estimation;
 import pl.pamsoft.ebs.model.Person;
+import pl.pamsoft.ebs.model.Task;
 import pl.pamsoft.ebs.model.Views;
 import pl.pamsoft.ebs.service.EstimationServices;
 import pl.pamsoft.ebs.service.PersonServices;
@@ -55,6 +58,14 @@ public class EstimationController extends AbstractController<Estimation> {
 		Person person = personServices.getOne(personId);
 		return estimationServices.simulate(person, estimation, limit);
 	}
+
+	@JsonView(Views.EstimationsByTask.class)
+	@RequestMapping(value = "byTask/{taskId}",
+		method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Collection<Estimation> getEstimationsByTasks(@PathVariable(value = "taskId") Long taskId) {
+		return estimationServices.getEstimationsByTasks(taskId);
+	}
+
 
 	@Autowired
 	public void setPerson(PersonServices personServices) {

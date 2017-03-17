@@ -1,0 +1,49 @@
+<div>
+  <div class="form-horizontal row">
+    <label class="col-xs-2 control-label">Task</label>
+    <div class="col-xs-5 selectContainer">
+      <select class="form-control" name="size" (change)="onTaskChange($event.target.value)">
+        <option disabled selected value> -- select an option -- </option>
+        <option *ngFor="let row of tasks" value="{{row.id}}">{{row.name}}</option>
+      </select>
+    </div>
+  </div>
+  <hr>
+  <div class="form-horizontal row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-2">Estimation</div>
+    <div class="col-xs-2">Actual</div>
+    <div class="col-xs-2">Difference</div>
+  </div>
+
+  <div *ngFor="let row of estimations" class="form-horizontal row">
+    <label class="col-xs-2 control-label">{{row.person.firstName}} {{row.person.lastName}}</label>
+    <div class="col-xs-2 selectContainer">
+      <input type="text" class="form-control" id="estimation" [(ngModel)]="row.estimatedTime" required>
+    </div>
+    <div class="col-xs-2 selectContainer">
+      <input type="text" class="form-control" id="actual" [(ngModel)]="row.actualTime">
+    </div>
+    <div class="col-xs-2 selectContainer">
+      <label class="col-xs-2 control-label">{{minutesToHours(row.estimatedTime - row.actualTime)}}</label>
+    </div>
+  </div>
+  <div [hidden]="!updateEnabled">
+    <button type="button" class="btn btn-success" (click)="updateEstimates()">Update all</button>
+  </div>
+  <!---->
+  <!--<div *ngFor="let row of estimations" class="form-horizontal row">-->
+    <!--<label class="col-xs-2 control-label">{{row.person.firstName}} {{row.person.lastName}}</label>-->
+    <!--<div class="col-xs-2 selectContainer">-->
+      <!--<input type="text" class="form-control" id="estimation" [value]="row.estimatedTime" (blur) = "row.estimatedTime=parseTime($event.target.value)" required>-->
+    <!--</div>-->
+    <!--<div class="col-xs-2 selectContainer">-->
+      <!--<input type="text" class="form-control" id="actual" [value]="row.actualTime" (blur) = "row.actualTime=parseTime($event.target.value)">-->
+    <!--</div>-->
+    <!--<div class="col-xs-2 selectContainer">-->
+      <!--<label class="col-xs-2 control-label">{{minutesToHours(row.estimatedTime - row.actualTime)}}</label>-->
+    <!--</div>-->
+  <!--</div>-->
+
+</div>
+{{diagnostic}}

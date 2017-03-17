@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.Getter;
 
 @Entity
@@ -14,13 +16,16 @@ import lombok.Getter;
 @Getter
 public class Person extends AbstractEntity {
 
+	@JsonView(Views.EstimationsByTask.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@JsonView(Views.EstimationsByTask.class)
 	@NotNull
 	private String firstName;
 
+	@JsonView(Views.EstimationsByTask.class)
 	@NotNull
 	private String lastName;
 
