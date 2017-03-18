@@ -1,0 +1,27 @@
+.line {
+  stroke: #E4002B;
+  fill: none;
+  stroke-width: 3;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+
+.text-label {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+
+.dot {
+  stroke: #293b47;
+  fill: #7A99AC
+}
