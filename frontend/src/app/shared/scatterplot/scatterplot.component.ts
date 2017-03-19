@@ -11,7 +11,7 @@ import {ChartData} from "../../model/chart/ChartData";
 export class ScatterplotComponent implements OnInit {
   @ViewChild('chart') private chartContainer: ElementRef;
   @Input() private data: ChartData;
-  private margin: any = { top: 20, bottom: 20, left: 20, right: 20};
+  private margin: any = { top: 20, bottom: 40, left: 40, right: 20};
   private chart: any;
   private width: number;
   private height: number;
@@ -46,8 +46,8 @@ export class ScatterplotComponent implements OnInit {
     this.width = wys - this.margin.left - this.margin.right;
     this.height = szer - this.margin.top - this.margin.bottom;
     let svg = d3.select(element).append('svg')
-      .attr('width', wys)
-      .attr('height', szer);
+      .attr('width', wys + this.margin.left + this.margin.right)
+      .attr('height', szer + this.margin.top + this.margin.bottom);
 
     // define X & Y domains
     let xDomain = [0, d3.max(this.data.dataPoints, d => d.x)];
@@ -107,26 +107,8 @@ export class ScatterplotComponent implements OnInit {
 
 
   updateChart() {
-    // update scales & axis
-    this.xScale.domain(this.data.dataPoints.map(d => d.x));
-    this.yScale.domain([0, d3.max(this.data.dataPoints, d => d.y)]);
-    //this.colors.domain([0, this.data.length]);
-    //this.xAxis.transition().call(d3.axisBottom(this.xScale));
-    //this.yAxis.transition().call(d3.axisLeft(this.yScale));
-
-    let update = this.chart.selectAll('.dot')
-      .data(this.data.dataPoints);
-
-    // remove exiting bars
-    update.exit().remove();
-
-    let xScaler = this.xScale;
-    let yScaler = this.yScale;
-    // add new bars
-    update.enter().append("circle")
-      .attr("class", "dot")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return xScaler(d.x) })
-      .attr("cy", function(d) { return yScaler(d.y) });
+    let element = this.chartContainer.nativeElement;
+    d3.select(element).select('svg').remove();
+    this.createChart();
   }
 }

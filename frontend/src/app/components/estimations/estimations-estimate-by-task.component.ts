@@ -31,7 +31,7 @@ export class EstimationsEstimateByTaskComponent implements OnInit {
       this.estimations = p;
       if (this.estimations.length > 0) {
         this.updateEnabled = true;
-        this.generateData()
+        this.generateData(p.slice(0))
       } else {
         this.updateEnabled = false;
         this.chartData = null;
@@ -68,11 +68,16 @@ export class EstimationsEstimateByTaskComponent implements OnInit {
 
   get diagnostic() { return JSON.stringify(this.estimations); }
 
-  generateData() {
+  generateData(estimations : Estimation[]) {
+    let filtered = estimations
+      .filter(i => i.estimatedTime != null)
+      .filter(i => i.actualTime != null)
+      .sort((a, b) => {return a.estimatedTime.valueOf()-b.estimatedTime.valueOf();});
     var points : Array<DataPoint> = [];
-    for (let i = 0; i < (8 + Math.floor(Math.random() * 10)); i++) {
-      //this.chartData.push([`Index ${i}`, Math.floor(Math.random() * 100)]);
-      points.push(new DataPoint(i, Math.floor(Math.random() * 100)));
+    for (let i = 0; i < filtered.length; i++) {
+      let estimatedTime = filtered[i].estimatedTime;
+      let actualTime = filtered[i].actualTime;
+        points.push(new DataPoint(estimatedTime.valueOf(), actualTime.valueOf()));
     }
     this.chartData = this.calculateRegressionLine(new ChartData(points));
   }

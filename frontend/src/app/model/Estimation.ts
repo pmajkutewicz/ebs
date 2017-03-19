@@ -4,7 +4,7 @@ export class Estimation {
   constructor(public id: number,
               public person: Person,
               public task: Task,
-              public estimatedTime: number,
+              public estimatedTime: Number,
               public actualTime: Number) {
   }
 
