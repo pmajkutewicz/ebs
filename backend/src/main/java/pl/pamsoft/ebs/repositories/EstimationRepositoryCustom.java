@@ -9,4 +9,5 @@ public interface EstimationRepositoryCustom {
 
 	List<Estimation> findAllForSimulation(Person person, int limit);
 
+	List<Estimation> findAllByTaskId(Long taskId);
 }

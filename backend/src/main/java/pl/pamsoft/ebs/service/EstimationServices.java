@@ -55,7 +55,7 @@ public class EstimationServices {
 	}
 
 	public Collection<Estimation> getEstimationsByTasks(Long taskId) {
-		return estimationRepository.findAllByTask(taskRepository.getOne(taskId));
+		return estimationRepository.findAllByTaskId(taskId);
 	}
 
 	@Autowired

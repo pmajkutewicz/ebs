@@ -1,5 +1,6 @@
 package pl.pamsoft.ebs.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,17 +12,20 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "task")
 @Getter
+@Setter
 @NoArgsConstructor
 public class Task extends AbstractEntity {
 
 	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "task_id")
 	private Long id;
 
 	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
