@@ -12,8 +12,7 @@ import {EstimationsEstimateByTaskComponent} from "./components/estimations/estim
 import {EstimationsEstimateByPersonComponent} from "./components/estimations/estimations-estimate-by-person.component";
 import {DropdownModule} from "ng2-bootstrap";
 import {routing} from "./app.routing";
-import { BarchartComponent } from './shared/barchart/barchart.component';
-import { ScatterplotComponent } from './shared/scatterplot/scatterplot.component';
+import { ScatterchartComponent } from './shared/scatterchart/scatterchart.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { ScatterplotComponent } from './shared/scatterplot/scatterplot.component
     TasksComponent,
     EstimationsEstimateByTaskComponent,
     EstimationsEstimateByPersonComponent,
-    BarchartComponent,
-    ScatterplotComponent
+    ScatterchartComponent
   ],
   imports: [
     BrowserModule,
