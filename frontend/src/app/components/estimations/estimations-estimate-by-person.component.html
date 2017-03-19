@@ -1,3 +1,59 @@
-<p>
-  estimations-estimate-by-person works!
-</p>
+<div>
+  <div class="form-horizontal row">
+    <label class="col-xs-2 control-label">Person</label>
+    <div class="col-xs-5 selectContainer">
+      <select class="form-control" name="size" (change)="onPersonChange($event.target.value)">
+        <option disabled selected value> -- select an option --</option>
+        <option *ngFor="let row of persons" value="{{row.id}}">{{row.firstName}} {{row.lastName}}</option>
+      </select>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="form-horizontal row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2">Estimation</div>
+        <div class="col-xs-2">Actual</div>
+        <div class="col-xs-2">Difference</div>
+      </div>
+
+      <div *ngFor="let row of estimations" class="form-horizontal row">
+        <label class="col-xs-2 control-label">{{row.task.name}}</label>
+        <div class="col-xs-2 selectContainer">
+          <input type="text" class="form-control" id="estimation" [(ngModel)]="row.estimatedTime" required>
+        </div>
+        <div class="col-xs-2 selectContainer">
+          <input type="text" class="form-control" id="actual" [(ngModel)]="row.actualTime">
+        </div>
+        <div class="col-xs-2 selectContainer">
+          <label class="col-xs-2 control-label">{{minutesToHours(row.estimatedTime - row.actualTime)}}</label>
+        </div>
+      </div>
+      <div [hidden]="!updateEnabled">
+        <button type="button" class="btn btn-success" (click)="updateEstimates()">Update all</button>
+      </div>
+      <!---->
+      <!--<div *ngFor="let row of estimations" class="form-horizontal row">-->
+      <!--<label class="col-xs-2 control-label">{{row.person.firstName}} {{row.person.lastName}}</label>-->
+      <!--<div class="col-xs-2 selectContainer">-->
+      <!--<input type="text" class="form-control" id="estimation" [value]="row.estimatedTime" (blur) = "row.estimatedTime=parseTime($event.target.value)" required>-->
+      <!--</div>-->
+      <!--<div class="col-xs-2 selectContainer">-->
+      <!--<input type="text" class="form-control" id="actual" [value]="row.actualTime" (blur) = "row.actualTime=parseTime($event.target.value)">-->
+      <!--</div>-->
+      <!--<div class="col-xs-2 selectContainer">-->
+      <!--<label class="col-xs-2 control-label">{{minutesToHours(row.estimatedTime - row.actualTime)}}</label>-->
+      <!--</div>-->
+      <!--</div>-->
+
+    </div>
+    <div class="col-xs-6">
+      <h3>Scatterplot Chart</h3>
+      <ebs-scatterplot *ngIf="chartData" [data]="chartData"></ebs-scatterplot>
+    </div>
+  </div>
+</div>
+
+
+{{diagnostic}}

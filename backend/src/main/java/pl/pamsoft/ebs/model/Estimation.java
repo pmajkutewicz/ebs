@@ -23,27 +23,27 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Estimation extends AbstractEntity {
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "estimation_id")
 	private Long id;
 
-	@JsonView(Views.EstimationsByTask.class)
+	@JsonView(Views.EstimationsByTaskOrPerson.class)
 	@ManyToOne
 	@JoinColumn(name = "fk_person_id")
 	private Person person;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@ManyToOne
 	@JoinColumn(name = "fk_task_id")
 	private Task task;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@Column(name = "estimated_time")
 	private Integer estimatedTime;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@Column(name = "actual_time")
 	private Integer actualTime;
 

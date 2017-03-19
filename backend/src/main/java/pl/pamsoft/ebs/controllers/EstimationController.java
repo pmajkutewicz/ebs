@@ -16,7 +16,6 @@ import pl.pamsoft.ebs.dto.SimulatedEstimation;
 import pl.pamsoft.ebs.error.BadRequestException;
 import pl.pamsoft.ebs.model.Estimation;
 import pl.pamsoft.ebs.model.Person;
-import pl.pamsoft.ebs.model.Task;
 import pl.pamsoft.ebs.model.Views;
 import pl.pamsoft.ebs.service.EstimationServices;
 import pl.pamsoft.ebs.service.PersonServices;
@@ -59,13 +58,19 @@ public class EstimationController extends AbstractController<Estimation> {
 		return estimationServices.simulate(person, estimation, limit);
 	}
 
-	@JsonView(Views.EstimationsByTask.class)
+	@JsonView(Views.EstimationsByTaskOrPerson.class)
 	@RequestMapping(value = "byTask/{taskId}",
 		method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Collection<Estimation> getEstimationsByTasks(@PathVariable(value = "taskId") Long taskId) {
 		return estimationServices.getEstimationsByTasks(taskId);
 	}
 
+	@JsonView(Views.EstimationsByTaskOrPerson.class)
+	@RequestMapping(value = "byPerson/{personId}",
+		method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public Collection<Estimation> getEstimationsByPersons(@PathVariable(value = "personId") Long personId) {
+		return estimationServices.getEstimationsByPersons(personId);
+	}
 
 	@Autowired
 	public void setPerson(PersonServices personServices) {

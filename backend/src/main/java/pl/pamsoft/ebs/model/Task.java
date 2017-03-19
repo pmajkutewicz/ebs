@@ -22,13 +22,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Task extends AbstractEntity {
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "task_id")
 	private Long id;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTask.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
 	@NotNull
 	private String name;
 

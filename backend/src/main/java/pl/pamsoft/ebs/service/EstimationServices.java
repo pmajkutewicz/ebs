@@ -58,6 +58,10 @@ public class EstimationServices {
 		return estimationRepository.findAllByTaskId(taskId);
 	}
 
+	public Collection<Estimation> getEstimationsByPersons(Long personId) {
+		return estimationRepository.findAllByPersonId(personId);
+	}
+
 	@Autowired
 	public void setTaskRepository(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;

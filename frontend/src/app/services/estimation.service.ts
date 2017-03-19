@@ -17,6 +17,11 @@ export class EstimationService {
     return this.http.get(`${this.baseUrl}/byTask/${taskId}`, options).map((res: Response) => res.json());
   }
 
+  getAllByPerson(personId: number): Observable<Estimation[]> {
+    let options = new RequestOptions({headers: this.getHeaders()});
+    return this.http.get(`${this.baseUrl}/byPerson/${personId}`, options).map((res: Response) => res.json());
+  }
+
   private getHeaders() {
     let headers = new Headers();
     headers.append('Accept', 'application/json;charset=UTF-8');
