@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -19,6 +21,7 @@ import pl.pamsoft.ebs.model.Person;
 import pl.pamsoft.ebs.model.Views;
 import pl.pamsoft.ebs.service.EstimationServices;
 import pl.pamsoft.ebs.service.PersonServices;
+import pl.pamsoft.ebs.service.SimulationServices;
 
 @RestController
 @RequestMapping("/estimation")
@@ -26,6 +29,15 @@ public class EstimationController extends AbstractController<Estimation> {
 
 	private PersonServices personServices;
 	private EstimationServices estimationServices;
+	private SimulationServices simulationServices;
+
+	@JsonView(Views.EstimationsByTaskOrPerson.class)
+	@ResponseBody
+	@RequestMapping(value = "update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public List<Estimation> update(@RequestBody List<Estimation> estimations) throws BadRequestException {
+		estimations.forEach(e -> estimationServices.save(e));
+		return estimations;
+	}
 
 	@JsonView(Views.PersonEstimations.class)
 	@RequestMapping(value = "forPerson/{personId}", method = RequestMethod.GET)
@@ -44,7 +56,7 @@ public class EstimationController extends AbstractController<Estimation> {
 		throwExceptionWhenIdIsNull(personId);
 
 		Person person = personServices.getOne(personId);
-		return estimationServices.simulate(person, estimation);
+		return simulationServices.simulate(person, estimation);
 	}
 
 	@RequestMapping(value = "forPerson/{personId}/simulate/{estimation}/limit/{limit}", method = RequestMethod.GET)
@@ -55,7 +67,7 @@ public class EstimationController extends AbstractController<Estimation> {
 		throwExceptionWhenIdIsNull(personId);
 
 		Person person = personServices.getOne(personId);
-		return estimationServices.simulate(person, estimation, limit);
+		return simulationServices.simulate(person, estimation, limit);
 	}
 
 	@JsonView(Views.EstimationsByTaskOrPerson.class)
@@ -80,5 +92,10 @@ public class EstimationController extends AbstractController<Estimation> {
 	@Autowired
 	public void setEstimationServices(EstimationServices estimationServices) {
 		this.estimationServices = estimationServices;
+	}
+
+	@Autowired
+	public void setSimulationServices(SimulationServices simulationServices) {
+		this.simulationServices = simulationServices;
 	}
 }

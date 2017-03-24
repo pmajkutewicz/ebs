@@ -19,7 +19,9 @@ public class EstimationRepositoryImpl implements EstimationRepositoryCustom {
 	private String simulationQuery =
 		"select e from Estimation e " +
 			" where e.actualTime is not null " +
+			"   and e.person.id = :personId " +
 			" order by e.estimationTimestamp desc ";
+
 	private JdbcTemplate jdbcTemplate;
 	private RowMapper<Estimation> estimationRowMapper = (rs, i) -> {
 		Person person = new Person();
@@ -34,9 +36,15 @@ public class EstimationRepositoryImpl implements EstimationRepositoryCustom {
 		long estimation_id = rs.getLong("estimation_id");
 		if (!rs.wasNull()) {
 			e.setId(estimation_id);
-			e.setActualTime(rs.getInt("actual_time"));
-			e.setEstimatedTime(rs.getInt("estimated_time"));
-			e.setEstimationTimestamp(rs.getLong("estimation_timestamp"));
+			int actual_time = rs.getInt("actual_time");
+			if (!rs.wasNull()) {
+				e.setActualTime(actual_time);
+			}
+			int estimated_time = rs.getInt("estimated_time");
+			if (!rs.wasNull()) {
+				e.setEstimatedTime(estimated_time);
+				e.setEstimationTimestamp(rs.getLong("estimation_timestamp"));
+			}
 		}
 		return e;
 	};
@@ -49,6 +57,7 @@ public class EstimationRepositoryImpl implements EstimationRepositoryCustom {
 	@Override
 	public List<Estimation> findAllForSimulation(Person person, int limit) {
 		TypedQuery<Estimation> query = em.createQuery(simulationQuery, Estimation.class);
+		query.setParameter("personId", person.getId());
 		query.setMaxResults(limit);
 		return query.getResultList();
 	}
@@ -76,11 +85,14 @@ public class EstimationRepositoryImpl implements EstimationRepositoryCustom {
 
 		switch (queryType) {
 			case BY_TASKS:
-				return query + " WHERE t.task_id = ?";
+				query = query + " WHERE t.task_id = ?";
+				break;
 			case BY_PERSONS:
-				return query + " WHERE p.person_id = ?";
+				query = query + " WHERE p.person_id = ?";
+				break;
 		}
-		return null;
+
+		return query + " AND t.name != \"" + Const.RANDOM_ESTIMATIONS + "\"";
 	}
 
 	private enum QueryType {

@@ -14,8 +14,8 @@ export class EstimationsEstimateByPersonComponent extends EstimationsEstimateBy 
 
   private persons: Person[] = [];
 
-  constructor(private personService: PersonService, private estimationService: EstimationService) {
-    super()
+  constructor(private personService: PersonService, estimationService: EstimationService) {
+    super(estimationService)
   }
 
   ngOnInit() {

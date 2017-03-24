@@ -14,8 +14,8 @@ export class EstimationsEstimateByTaskComponent extends EstimationsEstimateBy im
 
   private tasks: Task[] = [];
 
-  constructor(private taskService: TaskService, private estimationService: EstimationService) {
-    super()
+  constructor(private taskService: TaskService, estimationService: EstimationService) {
+    super(estimationService)
   }
 
   ngOnInit() {
@@ -25,15 +25,4 @@ export class EstimationsEstimateByTaskComponent extends EstimationsEstimateBy im
   onTaskChange(taskId: number) {
     this.estimationService.getAllByTask(taskId).subscribe(p => this.onDataUpdate(p));
   }
-
-  // parseTime(minutes: number): string {
-  //   console.log("Parse: " + minutes);
-  //   return this.minutesToHours(minutes);
-  //   // if (dateString) {
-  //   //   return new Date(dateString);
-  //   // } else {
-  //   //   return null;
-  //   // }
-  // }
-
 }

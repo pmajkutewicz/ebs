@@ -1,5 +1,7 @@
 package pl.pamsoft.ebs.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,4 +13,5 @@ public class SimulatedEstimation {
 	Integer avg;
 	Integer count;
 	Integer originalEstimation;
+	List<Integer> values;
 }

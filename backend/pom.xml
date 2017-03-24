@@ -18,6 +18,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<jackson-datatype.version>2.9.0.pr1</jackson-datatype.version>
+		<commons-collections.version>3.2.2</commons-collections.version>
 	</properties>
 
 	<dependencyManagement>

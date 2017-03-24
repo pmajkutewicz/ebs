@@ -1,11 +1,17 @@
 import {ChartData} from "../../model/chart/ChartData";
 import {DataPoint} from "../../model/chart/DataPoint";
 import {Estimation} from "../../model/Estimation";
+import {EstimationService} from "../../services/estimation.service";
+import {SimulatedEstimation} from "../../model/SimulatedEstimation";
 export abstract class EstimationsEstimateBy {
 
   private estimations: Estimation[] = [];
   private updateEnabled:boolean = false;
   private chartData: ChartData;
+  private simulations: { [key:number]:SimulatedEstimation; } = {};
+
+  constructor(protected estimationService: EstimationService) {
+  }
 
   onDataUpdate(p: Estimation[]) {
     this.estimations = p;
@@ -32,7 +38,7 @@ export abstract class EstimationsEstimateBy {
   }
 
   updateEstimates(): void {
-    console.log("All estimates updated")
+    this.estimationService.update(this.estimations).subscribe(p => this.estimations = p);
   }
 
   generateData(estimations : Estimation[]): ChartData {
@@ -82,6 +88,46 @@ export abstract class EstimationsEstimateBy {
       chartData.dataPoints[i].yhat = yhat;
     }
     return chartData;
+  }
+
+  infoRow(estimation: Estimation){
+    console.log("Row: " + estimation.actualTime);
+    if (estimation.actualTime != null) {
+      let estimatedTime: number = estimation.estimatedTime.valueOf();
+      let actualTime: number = estimation.actualTime.valueOf();
+      let minutes = estimatedTime - actualTime;
+      if (minutes > 0) {
+        return 'Overestimated by: ' + this.minutesToHours(minutes);
+      } else if (minutes < 0) {
+        return 'Underestimated by: ' + this.minutesToHours(minutes);
+      } else {
+        return "";
+      }
+    } else {
+      let simulation = this.getSimulation(estimation);
+      if (simulation != null) {
+        return 'More likely it would be: ' + this.minutesToHours(simulation.avg);
+      } else {
+        return "";
+      }
+    }
+  }
+
+  simulate(rowId: number, personId: number, estimation: number) {
+    console.log(`Simulation ${rowId}`);
+    this.estimationService.simulate(personId, estimation).subscribe( result => {
+        this.simulations[rowId] = result;
+        console.log(`Simulating estimation of ${estimation} for ${personId}: ` + JSON.stringify(result));
+      }
+    );
+  }
+
+  getSimulation(estimation: Estimation) {
+    let simulation = this.simulations[estimation.id];
+    if (simulation == null) {
+      this.simulate(estimation.id, estimation.person.id, estimation.estimatedTime.valueOf());
+    }
+    return simulation;
   }
 
   get diagnostic() { return JSON.stringify(this.estimations); }

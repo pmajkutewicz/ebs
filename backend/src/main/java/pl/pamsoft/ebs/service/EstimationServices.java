@@ -1,16 +1,13 @@
 package pl.pamsoft.ebs.service;
 
 import java.util.Collection;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.pamsoft.ebs.dto.SimulatedEstimation;
 import pl.pamsoft.ebs.model.Estimation;
 import pl.pamsoft.ebs.model.Person;
 import pl.pamsoft.ebs.model.Task;
@@ -31,21 +28,6 @@ public class EstimationServices {
 		return estimationRepository.findAllByPerson(person);
 	}
 
-	public SimulatedEstimation simulate(Person person, Integer estimate) {
-		return simulate(person, estimate, EXAMPLE_ESTIMATIONS_NB);
-	}
-
-	public SimulatedEstimation simulate(Person person, Integer estimate, int limit) {
-		List<Estimation> estimations =
-			estimationRepository.findAllForSimulation(person, limit);
-		IntSummaryStatistics stats = estimations.stream()
-			.map(estimation -> estimation.getVelocity() * estimate)
-			.map(Math::round)
-			.collect(Collectors.summarizingInt(i -> i));
-
-		return toResult(stats, estimate);
-	}
-
 	public void generateRandomEstimates(Person person) {
 		Task randomTask = getRandomTask();
 
@@ -62,6 +44,10 @@ public class EstimationServices {
 		return estimationRepository.findAllByPersonId(personId);
 	}
 
+	public Estimation save(Estimation estimation) {
+		return estimationRepository.save(estimation);
+	}
+
 	@Autowired
 	public void setTaskRepository(TaskRepository taskRepository) {
 		this.taskRepository = taskRepository;
@@ -70,12 +56,6 @@ public class EstimationServices {
 	@Autowired
 	public void setEstimationRepository(EstimationRepository estimationRepository) {
 		this.estimationRepository = estimationRepository;
-	}
-
-	private SimulatedEstimation toResult(IntSummaryStatistics stats, Integer estimate) {
-		int avg = Math.round(Double.valueOf(stats.getAverage()).floatValue());
-		int count = Long.valueOf(stats.getCount()).intValue();
-		return new SimulatedEstimation(stats.getMin(), stats.getMax(), avg, count, estimate);
 	}
 
 	private Estimation createEstimation(Person person, Task randomTask) {
