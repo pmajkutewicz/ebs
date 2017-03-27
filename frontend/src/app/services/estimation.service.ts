@@ -4,6 +4,7 @@ import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {Estimation} from "../model/Estimation";
 import {SimulatedEstimation} from "../model/SimulatedEstimation";
+import {PersonStats} from "../model/PersonStats";
 
 @Injectable()
 export class EstimationService {
@@ -33,6 +34,10 @@ export class EstimationService {
     return this.http.get(`${this.baseUrl}/forPerson/${personId}/simulate/${estimation}`, options).map((res: Response) => res.json());
   }
 
+  stats(): Observable<PersonStats[]> {
+    let options = new RequestOptions({headers: this.getHeaders()});
+    return this.http.get(`${this.baseUrl}/stats`, options).map((res: Response) => res.json());
+  }
 
   private getHeaders() {
     let headers = new Headers();

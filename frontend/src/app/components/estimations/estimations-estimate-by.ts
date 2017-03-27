@@ -7,7 +7,7 @@ export abstract class EstimationsEstimateBy {
 
   private estimations: Estimation[] = [];
   private updateEnabled:boolean = false;
-  private chartData: ChartData;
+  private chartData: ChartData<number>;
   private simulations: { [key:number]:SimulatedEstimation; } = {};
 
   constructor(protected estimationService: EstimationService) {
@@ -41,12 +41,12 @@ export abstract class EstimationsEstimateBy {
     this.estimationService.update(this.estimations).subscribe(p => this.estimations = p);
   }
 
-  generateData(estimations : Estimation[]): ChartData {
+  generateData(estimations : Estimation[]): ChartData<number> {
     let filtered = estimations
       .filter(i => i.estimatedTime != null)
       .filter(i => i.actualTime != null)
       .sort((a, b) => {return a.estimatedTime.valueOf()-b.estimatedTime.valueOf();});
-    let points : Array<DataPoint> = [];
+    let points : Array<DataPoint<number>> = [];
     for (let i = 0; i < filtered.length; i++) {
       let estimatedTime = filtered[i].estimatedTime;
       let actualTime = filtered[i].actualTime;
@@ -55,7 +55,7 @@ export abstract class EstimationsEstimateBy {
     return this.calculateRegressionLine(new ChartData(points));
   }
 
-  private calculateRegressionLine(chartData: ChartData): ChartData {
+  private calculateRegressionLine(chartData: ChartData<number>): ChartData<number> {
     let x_mean = 0;
     let y_mean = 0;
     let term1 = 0;
@@ -91,7 +91,6 @@ export abstract class EstimationsEstimateBy {
   }
 
   infoRow(estimation: Estimation){
-    console.log("Row: " + estimation.actualTime);
     if (estimation.actualTime != null) {
       let estimatedTime: number = estimation.estimatedTime.valueOf();
       let actualTime: number = estimation.actualTime.valueOf();
@@ -114,7 +113,6 @@ export abstract class EstimationsEstimateBy {
   }
 
   simulate(rowId: number, personId: number, estimation: number) {
-    console.log(`Simulation ${rowId}`);
     this.estimationService.simulate(personId, estimation).subscribe( result => {
         this.simulations[rowId] = result;
         console.log(`Simulating estimation of ${estimation} for ${personId}: ` + JSON.stringify(result));
@@ -124,7 +122,7 @@ export abstract class EstimationsEstimateBy {
 
   getSimulation(estimation: Estimation) {
     let simulation = this.simulations[estimation.id];
-    if (simulation == null) {
+    if (simulation == null && estimation.estimatedTime != null) {
       this.simulate(estimation.id, estimation.person.id, estimation.estimatedTime.valueOf());
     }
     return simulation;

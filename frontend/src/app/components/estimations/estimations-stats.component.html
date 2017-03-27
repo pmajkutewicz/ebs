@@ -1,0 +1,13 @@
+<div>
+  <div *ngFor="let personId of personKeys" class="row">
+    <label class="col-xs-3 control-label">{{row}}</label>
+
+    <label class="col-xs-3 control-label">{{personStats[personId].person.firstName}} {{personStats[personId].person.lastName}}</label>
+    <div class="col-xs-6">
+      <h3>Velocity frequency graph</h3>
+      <ebs-barchart *ngIf="chartData[personId]" [data]="chartData[personId]"></ebs-barchart>
+    </div>
+  </div>
+</div>
+
+{{diagnostic}}

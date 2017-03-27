@@ -25,11 +25,10 @@ import pl.pamsoft.ebs.service.simulation.SimulationStatistics;
 @Service
 public class SimulationServices {
 
-	private static final int EXAMPLE_ESTIMATIONS_NB = 100;
 	private EstimationRepository estimationRepository;
 
 	public SimulatedEstimation simulate(Person person, Integer estimate) {
-		return simulate(person, estimate, EXAMPLE_ESTIMATIONS_NB);
+		return simulate(person, estimate, ServiceConst.EXAMPLE_ESTIMATIONS_NB);
 	}
 
 	public SimulatedEstimation simulate(Person person, Integer estimate, int limit) {

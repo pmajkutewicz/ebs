@@ -39,11 +39,11 @@ public class Estimation extends AbstractEntity {
 	@JoinColumn(name = "fk_task_id")
 	private Task task;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class, Views.PersonStats.class})
 	@Column(name = "estimated_time")
 	private Integer estimatedTime;
 
-	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class})
+	@JsonView({Views.PersonEstimations.class, Views.EstimationsByTaskOrPerson.class, Views.PersonStats.class})
 	@Column(name = "actual_time")
 	private Integer actualTime;
 

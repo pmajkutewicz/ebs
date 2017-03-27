@@ -19,18 +19,18 @@ import lombok.Setter;
 @Setter
 public class Person extends AbstractEntity {
 
-	@JsonView(Views.EstimationsByTaskOrPerson.class)
+	@JsonView({Views.EstimationsByTaskOrPerson.class, Views.PersonStats.class})
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "person_id")
 	private Long id;
 
-	@JsonView(Views.EstimationsByTaskOrPerson.class)
+	@JsonView({Views.EstimationsByTaskOrPerson.class, Views.PersonStats.class})
 	@NotNull
 	@Column(name = "first_name")
 	private String firstName;
 
-	@JsonView(Views.EstimationsByTaskOrPerson.class)
+	@JsonView({Views.EstimationsByTaskOrPerson.class, Views.PersonStats.class})
 	@NotNull
 	@Column(name = "last_name")
 	private String lastName;

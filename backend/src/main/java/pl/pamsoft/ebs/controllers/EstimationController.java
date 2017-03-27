@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import pl.pamsoft.ebs.dto.PersonStats;
 import pl.pamsoft.ebs.dto.SimulatedEstimation;
 import pl.pamsoft.ebs.error.BadRequestException;
 import pl.pamsoft.ebs.model.Estimation;
@@ -68,6 +69,12 @@ public class EstimationController extends AbstractController<Estimation> {
 
 		Person person = personServices.getOne(personId);
 		return simulationServices.simulate(person, estimation, limit);
+	}
+
+	@JsonView(Views.PersonStats.class)
+	@RequestMapping(value = "stats", method = RequestMethod.GET)
+	public Collection<PersonStats> stats() throws BadRequestException {
+		return estimationServices.getStats();
 	}
 
 	@JsonView(Views.EstimationsByTaskOrPerson.class)
