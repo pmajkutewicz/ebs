@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, ViewChild, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 import {ChartData} from "../../model/chart/ChartData";
+import {DataPoint} from "../../model/chart/DataPoint";
 
 @Component({
   selector: 'ebs-scatterplot',
@@ -10,7 +11,7 @@ import {ChartData} from "../../model/chart/ChartData";
 })
 export class ScatterplotComponent implements OnInit {
   @ViewChild('chart') private chartContainer: ElementRef;
-  @Input() private data: ChartData;
+  @Input() private data: ChartData<number>;
   private margin: any = { top: 20, bottom: 40, left: 40, right: 20};
   private chart: any;
   private width: number;

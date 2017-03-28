@@ -5,7 +5,8 @@ export class Estimation {
               public person: Person,
               public task: Task,
               public estimatedTime: Number,
-              public actualTime: Number) {
+              public actualTime: Number,
+              public estimationTimestamp: Number) {
   }
 
 }

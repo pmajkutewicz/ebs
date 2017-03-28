@@ -15,6 +15,7 @@ import {routing} from "./app.routing";
 import { BarchartComponent } from './shared/barchart/barchart.component';
 import { ScatterplotComponent } from './shared/scatterplot/scatterplot.component';
 import { EstimationsStatsComponent } from './components/estimations/estimations-stats.component';
+import { LinechartComponent } from './shared/linechart/linechart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EstimationsStatsComponent } from './components/estimations/estimations-
     EstimationsEstimateByPersonComponent,
     BarchartComponent,
     ScatterplotComponent,
-    EstimationsStatsComponent
+    EstimationsStatsComponent,
+    LinechartComponent
   ],
   imports: [
     BrowserModule,
