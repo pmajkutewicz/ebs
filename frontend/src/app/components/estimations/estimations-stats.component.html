@@ -1,18 +1,17 @@
 <div class="container">
   <div *ngFor="let personId of personKeys" class="row">
     <div class="row">
-      <label class="col-xs-3 control-label">{{personStats[personId].person.firstName}} {{personStats[personId].person.lastName}}</label>
+      <h1 class="col-xs-3 control-label">{{personStats[personId].person.firstName}} {{personStats[personId].person.lastName}}</h1>
     </div>
     <div class="row">
       <div class="col-xs-6">
-        <h3>Velocity frequency graph</h3>
+        <h4>Velocity frequencies</h4>
         <ebs-barchart *ngIf="chartData[personId]" [data]="chartData[personId]"></ebs-barchart>
       </div>
       <div class="col-xs-6">
-        <h3>Line histogram graph</h3>
-        <ebs-linechart *ngIf="chartLineData[personId]" [data]="chartLineData[personId]"></ebs-linechart>
+        <h4>Last 20 estimations</h4>
+        <ebs-groupedbarchart *ngIf="personId" [personId]="personId"></ebs-groupedbarchart>
       </div>
     </div>
   </div>
 </div>
-class

@@ -19,6 +19,7 @@
 		<java.version>1.8</java.version>
 		<jackson-datatype.version>2.9.0.pr1</jackson-datatype.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
+		<opencsv.version>3.9</opencsv.version>
 	</properties>
 
 	<dependencyManagement>
@@ -80,6 +81,13 @@
 			<artifactId>jackson-datatype-jdk8</artifactId>
 			<version>${jackson-datatype.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>${opencsv.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
