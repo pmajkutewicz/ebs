@@ -1,13 +1,16 @@
 package pl.pamsoft.ebs.service;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.Range;
+
 class FrequencyBucketService {
 
 	private enum FrequencyBuckets {
-		A(Float.MIN_VALUE, 0.1f, "0.0 - 0.1"),
+		A(-99999f, 0.1f, "0.0 - 0.1"),
 		B(0.2f, 0.3f, "0.2 - 0.3"),
 		C(0.4f, 0.6f, "0.4 - 0.6"),
 		D(0.7f, 0.8f, "0.7 - 0.8"),
@@ -16,7 +19,7 @@ class FrequencyBucketService {
 		G(1.4f, 1.6f, "1.4 - 1.6"),
 		H(1.7f, 1.8f, "1.7 - 1.8"),
 		I(1.9f, 2.1f, "1.9 - 2.1"),
-		J(2.2f, Float.MAX_VALUE, "2.2 ...");
+		J(2.2f, 99999f, "2.2 ...");
 
 		private final float min;
 		private final float max;
@@ -34,14 +37,13 @@ class FrequencyBucketService {
 	}
 
 	static String getLabelForValue(float value) {
+		float rounded = new BigDecimal(String.valueOf(value)).setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
 		for (FrequencyBuckets frequencyBuckets : FrequencyBuckets.values()) {
-			boolean isGreaterThanMin = Float.compare(frequencyBuckets.min, value) == 1;
-			boolean isSmallerThanMax = Float.compare(value, frequencyBuckets.max) == -1;
-			if (isGreaterThanMin && isSmallerThanMax) {
+			if (Range.between(frequencyBuckets.min, frequencyBuckets.max).contains(rounded)) {
 				return frequencyBuckets.getBucketLabel();
 			}
 		}
-		return "";
+		return String.valueOf(value);
 	}
 
 	static Collection<String> getAllBuckets() {
