@@ -4,13 +4,17 @@
       <h1 class="col-xs-3 control-label">{{personStats[personId].person.firstName}} {{personStats[personId].person.lastName}}</h1>
     </div>
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col">
         <h4>Velocity frequencies</h4>
         <ebs-barchart *ngIf="chartData[personId]" [data]="chartData[personId]"></ebs-barchart>
       </div>
-      <div class="col-xs-6">
+      <div class="col-">
         <h4>Last 20 estimations</h4>
         <ebs-groupedbarchart *ngIf="personId" [personId]="personId"></ebs-groupedbarchart>
+      </div>
+      <div class="col">
+        <h4>Estimated time vs Actual time</h4>
+        <ebs-scatterplot *ngIf="scatterPlotChartData[personId]" [data]="scatterPlotChartData[personId]"></ebs-scatterplot>
       </div>
     </div>
   </div>
