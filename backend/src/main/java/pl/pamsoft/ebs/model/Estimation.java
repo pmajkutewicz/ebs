@@ -47,9 +47,9 @@ public class Estimation extends AbstractEntity {
 	@Column(name = "actual_time")
 	private Integer actualTime;
 
-	@JsonView({Views.PersonEstimations.class, Views.PersonStats.class})
+	@JsonView({Views.PersonEstimations.class, Views.PersonStats.class, Views.EstimationsByTaskOrPerson.class})
 	@Column(name = "estimation_timestamp")
-	private Long estimationTimestamp = new Date().getTime();
+	private Long estimationTimestamp;
 
 	public Estimation(Person person, Task task, Integer estimatedTime, Integer actualTime) {
 		this.person = person;

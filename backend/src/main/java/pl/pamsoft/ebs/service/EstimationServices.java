@@ -6,6 +6,7 @@ import static java.util.stream.Collectors.groupingBy;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,9 @@ public class EstimationServices {
 	}
 
 	public Estimation save(Estimation estimation) {
+		if (null == estimation.getEstimationTimestamp()) {
+			estimation.setEstimationTimestamp(new Date().getTime());
+		}
 		return estimationRepository.save(estimation);
 	}
 
