@@ -5,13 +5,11 @@
 
 	<groupId>pl.pamsoft.ebs</groupId>
 	<artifactId>ebs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<modules>
 		<module>backend</module>
 		<module>frontend</module>
 	</modules>
 	<packaging>pom</packaging>
-
-
 
 </project>
