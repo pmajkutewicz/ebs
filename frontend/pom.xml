@@ -11,6 +11,7 @@
 
   <artifactId>frontend</artifactId>
   <name>Evidence Based Scheduling - frontend</name>
+  <packaging>pom</packaging>
 
   <build>
     <plugins>
@@ -80,6 +81,25 @@
             </configuration>
           </execution>
 
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make shared resources</id>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <descriptors>
+                <descriptor>assembly/resources.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
