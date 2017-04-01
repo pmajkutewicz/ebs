@@ -1,11 +1,11 @@
 server:
-  port: 8083
+  port: ${port:8083}
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/ebs?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
-    username: ebs
-    password: ebs
+    url: jdbc:mysql://${db_host:127.0.0.1}:${db_port:3307}/${db_name:ebs}?useSSL=false&useUnicode=yes&characterEncoding=UTF-8
+    username: ${db_username:ebs}
+    password: ${db_password:ebs}
     testWhileIdle: true # Keep the connection alive if idle for a long time (needed in production)
     validationQuery: SELECT 1
   jpa:
