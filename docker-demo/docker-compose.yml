@@ -1,0 +1,18 @@
+version: '2'
+services:
+  ebs:
+    container_name: ebs
+    build: .
+    ports:
+      - "8083:8083"
+    depends_on:
+      - ebs_db
+    command: ["/wait-for-it.sh", "ebs_db:3306", "-t", "60", "-s", "--", "java", "-jar", "ebs-0.1.0.jar", "--db_port=3306", "--db_host=ebs_db"]
+  ebs_db:
+    container_name: ebs_db
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=ebs
+      - MYSQL_DATABASE=ebs
+      - MYSQL_USER=ebs
+      - MYSQL_PASSWORD=ebs
