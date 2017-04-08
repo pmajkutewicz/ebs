@@ -19,10 +19,10 @@ export class EstimationsEstimateByPersonComponent extends EstimationsEstimateBy 
   }
 
   ngOnInit() {
-    this.personService.getAll().subscribe(p => this.persons = p);
+    this.personService.getAll().subscribe(e => this.persons = e);
   }
 
   onPersonChange(personId: number) {
-    this.estimationService.getAllByPerson(personId).subscribe(p => this.onDataUpdate(p));
+    this.estimationService.getAllByPerson(personId).subscribe(e => this.onDataUpdate(e));
   }
 }

@@ -19,10 +19,10 @@ export class EstimationsEstimateByTaskComponent extends EstimationsEstimateBy im
   }
 
   ngOnInit() {
-    this.taskService.getAll().subscribe(p => this.tasks = p);
+    this.taskService.getAll().subscribe(e => this.tasks = e);
   }
 
   onTaskChange(taskId: number) {
-    this.estimationService.getAllByTask(taskId).subscribe(p => this.onDataUpdate(p));
+    this.estimationService.getAllByTask(taskId).subscribe(e => this.onDataUpdate(e));
   }
 }

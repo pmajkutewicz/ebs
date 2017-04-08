@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.pamsoft.ebs.error.BadRequestException;
@@ -25,12 +26,14 @@ public class PersonController extends AbstractController<Person> {
 		this.estimationServices = estimationServices;
 	}
 
+	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public void save(@Valid @RequestBody Person person) throws BadRequestException {
+	public Person save(@Valid @RequestBody Person person) throws BadRequestException {
 		super.save(person);
 		if (person.getGenerateRandomEntries()) {
 			estimationServices.generateRandomEstimates(person);
 		}
+		return person;
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)

@@ -22,8 +22,8 @@ export class TaskService {
     return this.http.get(`${this.baseUrl}/${id}`, {headers: this.getHeaders()}).map(this.toTask);
   }
 
-  create(task: Task): Observable<Response> {
-    return this.http.post(`${this.baseUrl}`, JSON.stringify(task), {headers: this.getHeaders()});
+  create(task: Task): Observable<Task> {
+    return this.http.post(`${this.baseUrl}`, JSON.stringify(task), {headers: this.getHeaders()}).map((res: Response) => res.json());
   }
 
   save(task: Task): Observable<Response> {

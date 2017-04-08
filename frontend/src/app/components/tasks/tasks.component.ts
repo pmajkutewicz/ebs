@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {Task} from "../../model/Task";
 import {TaskService} from "../../services/task.service";
-import {PersonService} from "../../services/person.service";
 
 @Component({
   selector: 'app-tasks',
@@ -19,12 +18,12 @@ export class TasksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskService.getAll().subscribe(p => this.tasks = p)
+    this.taskService.getAll().subscribe(t => this.tasks = t)
   }
 
   onSubmitTask(): void {
-    this.tasks.push(this.model);
-    this.taskService.create(this.model).subscribe();
+    this.taskService.create(this.model).subscribe(t => this.tasks.push(t));
+    this.model = new Task(null, '', '');
   }
 
   deleteTask(taskId: number): void {

@@ -22,8 +22,8 @@ export class PersonsComponent implements OnInit {
   }
 
   onSubmitPerson(): void {
-    this.person.push(this.model);
-    this.personService.create(this.model).subscribe();
+    this.personService.create(this.model).subscribe(p => this.person.push(p));
+    this.model = new Person(null, '', '', false);
   }
 
   deletePerson(personId: number): void {

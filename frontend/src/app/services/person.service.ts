@@ -26,8 +26,8 @@ export class PersonService {
     return person$;
   }
 
-  create(person: Person): Observable<Response> {
-    return this.http.post(`${this.baseUrl}`, JSON.stringify(person), {headers: this.getHeaders()});
+  create(person: Person): Observable<Person> {
+    return this.http.post(`${this.baseUrl}`, JSON.stringify(person), {headers: this.getHeaders()}).map((res: Response) => res.json());
   }
 
   save(person: Person): Observable<Response> {

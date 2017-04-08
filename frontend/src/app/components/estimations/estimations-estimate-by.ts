@@ -33,7 +33,7 @@ export abstract class EstimationsEstimateBy {
   }
 
   updateEstimates(): void {
-    this.estimationService.update(this.estimations).subscribe(p => this.estimations = p);
+    this.estimationService.update(this.estimations).subscribe(e => this.estimations = e);
   }
 
   infoRow(estimation: Estimation){
