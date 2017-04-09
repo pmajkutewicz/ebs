@@ -1,8 +1,15 @@
 version: '2'
 services:
-  ebs:
-    container_name: ebs
-    build: .
+  ebs_frontend:
+    container_name: ebs_frontend
+    build: ./frontend/
+    ports:
+      - "8081:80"
+    depends_on:
+      - ebs_backend
+  ebs_backend:
+    container_name: ebs_backend
+    build: ./backend/
     ports:
       - "8083:8083"
     depends_on:
